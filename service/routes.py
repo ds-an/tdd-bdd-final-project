@@ -112,7 +112,7 @@ def list_products():
         app.logger.info("Find by name: {name}")
         products = Product.find_by_name(name)
     elif category:
-        app.logger.info("Find by category: {category}")
+        app.logger.info("Find by category: {category.name}")
         products = Product.find_by_category(category)
     elif availability:
         app.logger.info("Find by category: {availability}")
