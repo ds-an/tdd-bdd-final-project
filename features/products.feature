@@ -6,8 +6,8 @@ Feature: The product store service back-end
 Background:
     Given the following products
         | name       | description     | price   | available | category   |
-        | Hat        | A red fedora    | 59.95   | True      | CLOTHS     |
-        | Shoes      | Blue shoes      | 120.50  | False     | CLOTHS     |
+        | Hat        | A red fedora    | 59.95   | True      | CLOTHES     |
+        | Shoes      | Blue shoes      | 120.50  | False     | CLOTHES     |
         | Big Mac    | 1/4 lb burger   | 5.99    | True      | FOOD       |
         | Sheets     | Full bed sheets | 87.00   | True      | HOUSEWARES |
 
