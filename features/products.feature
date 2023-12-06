@@ -6,8 +6,8 @@ Feature: The product store service back-end
 Background:
     Given the following products
         | name       | description     | price   | available | category   |
-        | Hat        | A red fedora    | 59.95   | True      | CLOTHES     |
-        | Shoes      | Blue shoes      | 120.50  | False     | CLOTHES     |
+        | Hat        | A red fedora    | 59.95   | True      | CLOTHES    |
+        | Shoes      | Blue shoes      | 120.50  | False     | CLOTHES    |
         | Big Mac    | 1/4 lb burger   | 5.99    | True      | FOOD       |
         | Sheets     | Full bed sheets | 87.00   | True      | HOUSEWARES |
 
@@ -52,7 +52,7 @@ Scenario: Read a Product
     And I should see "Hat" in the "Name" field
     And I should see "A red fedora" in the "Description" field
     And I should see "True" in the "Available" dropdown
-    And I should see "Cloths" in the "Category" dropdown
+    And I should see "Clothes" in the "Category" dropdown
     And I should see "59.95" in the "Price" field
 
 Scenario: Update a Product
