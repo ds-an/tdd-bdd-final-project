@@ -181,7 +181,7 @@ class TestProductRoutes(TestCase):
 
     def test_update_product(self):
         """It should Update a single product"""
-        test_product = ProductFactory()
+        test_product = self._create_products(1)[0]
         response = self.client.post(BASE_URL, json=test_product.serialize())
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         new_product = response.get_json()
@@ -190,6 +190,17 @@ class TestProductRoutes(TestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         updated_product = response.get_json()
         self.assertEqual(updated_product['description'], new_product['description'])
+
+    def test_delete_product(self):
+        """It shoud Delete a single product"""
+        products = self._create_products(5)
+        count = self.get_product_count()
+        test_product = products[0]
+        response = self.client.delete(BASE_URL, test_product.id)
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+        self.assertEqual(response.data, None)
+        response = self.client.get(f"{BASE_URL}/{test_product.id}")
+
 
     ######################################################################
     # Utility functions
