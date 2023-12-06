@@ -107,7 +107,7 @@ def list_products():
     products = []
     name = request.args.get("name")
     category = request.args.get("category")
-    availability = request.args.get("availability")
+    availability = request.args.get("available")
     if name:
         app.logger.info("Find by name: {name}")
         products = Product.find_by_name(name)
