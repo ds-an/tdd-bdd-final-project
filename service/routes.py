@@ -98,9 +98,16 @@ def create_products():
 # L I S T   A L L   P R O D U C T S
 ######################################################################
 
-#
-# PLACE YOUR CODE TO LIST ALL PRODUCTS HERE
-#
+@app.route("/products", methods=["GET"])
+def list_all_products():
+    """
+    List all products
+    """
+    app.logger.info("Request to Retrieve all products from database")
+    products = Product.all()
+    products_dict = [product.serialize() for product in products]
+    app.logger.info("Returning all products present in database")
+    return products_dict, status.HTTP_200_OK
 
 ######################################################################
 # R E A D   A   P R O D U C T
@@ -143,7 +150,6 @@ def update_products(product_id):
 # D E L E T E   A   P R O D U C T
 ######################################################################
 
-
-#
-# PLACE YOUR CODE TO DELETE A PRODUCT HERE
-#
+@app.route("/products/<int:product_id>", methods=["DELETE"])
+def delete_products(product_id):
+    
