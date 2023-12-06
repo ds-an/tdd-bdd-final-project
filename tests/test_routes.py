@@ -28,6 +28,7 @@ import os
 import logging
 from decimal import Decimal
 from unittest import TestCase
+from urllib.parse import quote_plus
 from service import app
 from service.common import status
 from service.models import db, init_db, Product
@@ -191,6 +192,14 @@ class TestProductRoutes(TestCase):
         updated_product = response.get_json()
         self.assertEqual(updated_product['description'], new_product['description'])
 
+    def test_list_all_products(self):
+        """It should List all products"""
+        products = self._create_products(5)
+        response = self.client.get(BASE_URL)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        data = response.get_json()
+        self.assertEqual(len(data), 5)
+
     def test_delete_product(self):
         """It should Delete a single product"""
         products = self._create_products(5)
@@ -198,8 +207,24 @@ class TestProductRoutes(TestCase):
         test_product = products[0]
         response = self.client.delete(f"{BASE_URL}/{test_product.id}")
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
-        self.assertEqual(response.data, None)
+        self.assertEqual(len(response.data), 0)
         response = self.client.get(f"{BASE_URL}/{test_product.id}")
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+        self.assertEqual(self.get_product_count(), count - 1)
+
+    def test_list_products_by_name(self):
+        """It should List products by their name"""
+        products = self._create_products(5)
+        product_name = products[0].name
+        count = len([product for product in products
+                    if product.name == product_name])
+        response = self.client.get(BASE_URL,
+                                   query_string=f"name={quote_plus(product_name)}")
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        data = response.get_json()
+        self.assertEqual(len(data), count)
+        for product in data:
+            self.assertEqual(product['name'], test_name)
 
 
     ######################################################################

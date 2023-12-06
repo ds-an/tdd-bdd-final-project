@@ -152,4 +152,10 @@ def update_products(product_id):
 
 @app.route("/products/<int:product_id>", methods=["DELETE"])
 def delete_products(product_id):
-    
+    app.logger.info("Request to delete a product with id [%s]", product_id)
+    product = Product.find(product_id)
+    if not product:
+        abort(status.HTTP_404_NOT_FOUND, f"Product {product} not found")
+    app.logger.info("Deleting product: %s", product.name)
+    product.delete()
+    return "", status.HTTP_204_NO_CONTENT
