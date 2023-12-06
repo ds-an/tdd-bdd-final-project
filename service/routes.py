@@ -123,7 +123,7 @@ def get_products(product_id):
 # U P D A T E   A   P R O D U C T
 ######################################################################
 
-@app.route("/products", methods=["PUT"])
+@app.route("/products/<int:product_id>", methods=["PUT"])
 def update_products(product_id):
     """
     Update a single product based on json body
@@ -133,7 +133,7 @@ def update_products(product_id):
     product = Product.find(product_id)
     if not product:
         abort(status.HTTP_404_NOT_FOUND, f"Product {product} not found")
-    product = product.deserialize()
+    product.deserialize(request.get_json())
     product.update()
     product_dict = product.serialize()
     app.logger.info("Returning product: %s", product.name)
