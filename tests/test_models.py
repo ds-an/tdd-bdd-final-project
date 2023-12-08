@@ -72,7 +72,7 @@ class TestProductModel(unittest.TestCase):
 
     def test_create_a_product(self):
         """It should Create a product and assert that it exists"""
-        product = Product(name="Fedora", description="A red hat", price=12.50, available=True, category=Category.CLOTHES)
+        product = Product(name="Fedora", description="A red hat", price=12.50, available=True, category=Category.CLOTHS)
         self.assertEqual(str(product), "<Product Fedora id=[None]>")
         self.assertTrue(product is not None)
         self.assertEqual(product.id, None)
@@ -80,7 +80,7 @@ class TestProductModel(unittest.TestCase):
         self.assertEqual(product.description, "A red hat")
         self.assertEqual(product.available, True)
         self.assertEqual(product.price, 12.50)
-        self.assertEqual(product.category, Category.CLOTHES)
+        self.assertEqual(product.category, Category.CLOTHS)
 
     def test_add_a_product(self):
         """It should Create a product and add it to the database"""
@@ -215,4 +215,3 @@ class TestProductModel(unittest.TestCase):
         self.assertEqual(found.count(), count)
         for product in found:
             self.assertEqual(product.price, price)
-
